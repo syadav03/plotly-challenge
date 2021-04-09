@@ -18,4 +18,18 @@ d3.json("samples.json").then((importedData) =>{
     });
      // Loads the dashboard with 940 for the initial page load
   optionChanged(subject_ids[0]);
-})
+});
+
+function optionChanged(selected_id) {
+    console.log("selected_id=", selected_id);
+
+    d3.json("samples.json").then((data) =>{
+        //bar chart
+        var samples = data.samples;
+        var results=samples.filter(sampleObject => sampleObject.id == selected_id);
+
+        console.log("samples:", samples);
+
+        
+    })
+}
