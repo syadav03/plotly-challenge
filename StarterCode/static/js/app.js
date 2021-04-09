@@ -30,6 +30,43 @@ function optionChanged(selected_id) {
 
         console.log("samples:", samples);
 
+        var result = results[0];
+
+        console.log("results: ");
+        console.log(results);
+
+        console.log("result: ");
+        console.log(result);
+
+        var otu_ids = result.otu_ids;
+    var otu_labels = result.otu_labels;
+    var sample_values = result.sample_values;
+
+    var y_label = otu_ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse();
+
+    console.log("y_label: ");
+    console.log(y_label);
+
+    console.log("sample_valuese: ");
+    console.log(sample_values.slice(0, 10).reverse());
+
+    var bar_trace = {
+      y: y_label,
+      x: sample_values.slice(0, 10).reverse(),
+      text: otu_labels.slice(0, 10).reverse(),
+      type: "bar",
+      orientation: "h",
+    };
+
+    var data = [bar_trace];
+
+    var bar_layout = {
+      title: "Top 10 OTUs",
+      margin: { t: 30, l: 150 }
+    };
+
+    Plotly.newPlot("bar", data, bar_layout);
+
         
     })
 }
