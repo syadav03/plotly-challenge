@@ -1,19 +1,21 @@
-var jsData;
+// Select tag 
 
-function init(){
-    var selector = d3.select(#selDataset);
+var selectedTag = d3.select("#selDataset");
 
-    d3.json("data/samples.jsonn").then((data) =>{
-        jsdata = data;
-            var subjectID = data.names;
-            subjectID.forEach((ID) => {
-                selector
-                .append('option')
-                .text(ID)
-                .property('value', ID);
-            });
-     const firstbutton = subjectID[0];
-     updateCharts(firstbutton);
-     updateMetadata(firstbutton);
+d3.json("samples.json").then((importedData) =>{
+    console.log("importedData")
+    console.log(importedData)
+
+    var subject_ids = importedData.names;
+    console.log("Subject_ids")
+    console.log(subject_ids)
+
+    subject_ids.map((id) =>{
+        selectedTag
+        .append("option")
+        .property("value" ,id)
+        .text(id)
     });
-};
+     // Loads the dashboard with 940 for the initial page load
+  optionChanged(subject_ids[0]);
+})
