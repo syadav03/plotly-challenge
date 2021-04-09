@@ -67,6 +67,53 @@ function optionChanged(selected_id) {
 
     Plotly.newPlot("bar", data, bar_layout);
 
-        
-    })
-}
+     // Bubble chart 
+
+     var results = samples.filter(sampleObject => sampleObject.id == selected_id);
+     var result = results[0];
+ 
+     var otu_ids = result.otu_ids;
+     var otu_labels = result.otu_labels;
+     var sample_values = result.sample_values;
+ 
+     var bubble_trace = {
+       x: otu_ids,
+       y: sample_values,
+       text: otu_labels,
+       mode: "markers",
+       marker: {
+         size: sample_values,
+         color: otu_ids,
+         colorscale: "Earth"
+       }
+     };
+ 
+     var data = [bubble_trace];
+ 
+     var bubble_layout = {
+       hovermode: "closest",
+       xaxis: { title: "OTU ID" },
+       margin: { t: 30 }
+     };
+ 
+     Plotly.newPlot("bubble", [bubble_trace], bubble_layout);
+   });
+
+};
+
+// function updateMetadata(sample) {
+//     d3.json("samples.json").then((data) => {
+//         // obtain Demographic Info for panel
+//         var metadata = data.metadata;
+//         var filterData = metadata.filter(sampleObject => sampleObject.id == sample);
+//         // console.log(filterData);
+//         var result = filterData[0];
+//         // console.log(result);
+//         var panelBody = d3.select("#sample-metadata");
+//          // remove any children from the list before refreshing with new data
+//          panelBody.html("");
+//         // append Demographic Info for panel
+//         Object.entries(result).forEach((key)=>{
+//             panelBody.append("p").text(key[0] + ":" + key[1]);
+//         })
+//     });
