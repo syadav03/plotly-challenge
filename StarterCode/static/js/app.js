@@ -99,21 +99,35 @@ function optionChanged(selected_id) {
      Plotly.newPlot("bubble", [bubble_trace], bubble_layout);
    });
 
-};
+   // Demorgrphic info
+  d3.json("samples.json").then((data) => {
+    var metadata = data.metadata;
 
-// function updateMetadata(sample) {
-//     d3.json("samples.json").then((data) => {
-//         // obtain Demographic Info for panel
-//         var metadata = data.metadata;
-//         var filterData = metadata.filter(sampleObject => sampleObject.id == sample);
-//         // console.log(filterData);
-//         var result = filterData[0];
-//         // console.log(result);
-//         var panelBody = d3.select("#sample-metadata");
-//          // remove any children from the list before refreshing with new data
-//          panelBody.html("");
-//         // append Demographic Info for panel
-//         Object.entries(result).forEach((key)=>{
-//             panelBody.append("p").text(key[0] + ":" + key[1]);
-//         })
-//     });
+    console.log("metadata");
+    console.log(metadata);
+
+    var results = metadata.filter(metadataObject => metadataObject.id == selected_id);
+    var result = results[0];
+
+    console.log("results")
+    console.log(results)
+
+    console.log("result")
+    console.log(result)
+
+    var fig = d3.select("#sample-metadata");
+
+    fig.html("");
+
+    Object.entries(results[0]).forEach(([key, value]) => {
+      fig.append("h5").text(`${key}: ${value}`);
+    });
+
+    buildGauge(result.wfreq);
+
+  });
+
+
+}
+
+
